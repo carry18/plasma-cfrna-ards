@@ -21,4 +21,4 @@ Samples are matched by identifier. The count-column order defines analysis order
 
 `scripts/assets/` contains fixed annotation definitions, published reference-signature membership and Figure 1 drawing definitions. It does not contain learned modules, cohort expression or precomputed statistical results. Source terms apply; see THIRD_PARTY_NOTICES.md.
 
-`data/external/` contains the public GSE66890 series matrix and GPL6244 platform annotation used in the analysis. They may also be supplied through CF_GEO_MATRIX and CF_GEO_PLATFORM. GEO: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE66890 .
+The external dataset is NCBI GEO GSE66890, with platform GPL6244. Download `GSE66890_series_matrix.txt.gz` and `GPL6244.annot.gz` into `data/external/`, or supply their paths through CF_GEO_MATRIX and CF_GEO_PLATFORM. The external data files are not included in the current repository tree. See data/external/README.md for GEO links.

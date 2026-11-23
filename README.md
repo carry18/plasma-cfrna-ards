@@ -8,7 +8,7 @@ The workflow starts from the final raw count matrix and frozen sample/clinical m
 
 Internal sequencing data are deposited in **GSA-Human under accession HRA022356** and are available through controlled access, subject to approval by the designated Data Access Committee. The cohort count matrix, participant-level clinical records and private identifier mappings are not included here. Authorized users must obtain and prepare the corresponding frozen inputs described in docs/input_schema.md. Access to raw sequencing reads alone does not automatically provide the clinical metadata needed to reproduce all clinical panels.
 
-The independent external dataset **GSE66890** is public. Its source matrix and platform annotation used here are included in data/external. See THIRD_PARTY_NOTICES.md for reference-data sources.
+The independent external dataset is available from NCBI GEO under accession [GSE66890](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE66890), with platform annotation [GPL6244](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL6244). Download the series matrix and platform annotation to data/external before running the analysis; file names and paths are listed in data/external/README.md.
 
 ## Environment
 

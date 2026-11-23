@@ -9,3 +9,5 @@ __pycache__/
 .Rproj.user/
 .env
 .env.*
+data/external/*.gz
+data/external/*.part
