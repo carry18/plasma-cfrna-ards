@@ -28,27 +28,10 @@ assert len({r['Sample'] for r in fixed}) == len(fixed)
 records={r['Sample']:r for r in fixed}
 assert set(records) == {r['Sample'] for r in md if r['group'] != 'D'}
 assert all(records[r['Sample']]['group'] == r['group'] for r in md if r['group'] != 'D')
-fields=dict(age='age',sex='sex',severity='severity',icu='icu_days',steroids='steroids',anticoagulants='anticoagulants',transfusion='transfusion',ECMO='ECMO',outcome='death')
-results=[]
-def add(label,fun,healthy='Not applicable'):
-    vals=[]
-    for g in 'ABC':
-        subset=[records[r['Sample']] for r in md if r['group']==g];vals.append(fun(subset))
-    results.append([label]+vals+[healthy])
-results.append(['Independent profiles']+[sum(r['group']==g for r in md) for g in 'ABCD'])
-for batch in ['Sep3','Dec2']:results.append([f'Experimental batch {1 if batch == "Sep3" else 2}']+[sum(r['group']==g and r['Batch']==batch for r in md) for g in 'ABCD'])
-add('Age years median IQR',lambda ss:summary([num(r.get(fields['age'])) for r in ss]),'Unavailable')
-add('Sex male female',lambda ss:f'{sum(str(r.get(fields["sex"],"")).strip()=="男" for r in ss)} / {sum(str(r.get(fields["sex"],"")).strip()=="女" for r in ss)}','Unavailable')
-add('APACHE II score, median (IQR)',lambda ss:summary([num(r.get(fields['severity'])) for r in ss]))
-add('ICU stay days, median (IQR)',lambda ss:summary([num(r.get(fields['icu'])) for r in ss]))
-for key,label in [('steroids','Steroid treatment n'),('anticoagulants','Anticoagulant treatment n'),('transfusion','Transfusion n'),('ECMO','ECMO n')]:
-    add(label,lambda ss,key=key:sum(int(r[fields[key]]) for r in ss))
-add('Deaths recorded n',lambda ss:sum(int(r['death']) for r in ss))
-clinical=fixed  # All 79 patient records.
-for ep,label in [('platelet','Platelet count available'),('pf_ratio','PaO2 FiO2 available'),('il6_value','IL 6 available'),('wbc_value','White blood cell count available'),('bilirubin_value','Bilirubin available'),('creatinine_value','Creatinine available')]:
-    results.append([label]+[sum(r['group']==g and r[ep] not in ('NA','','NaN') for r in clinical) for g in 'ABCD'])
+from table1 import build_table1
+results=build_table1(read(paths['table1_clinical']))
 with (ROOT/'Table1.csv').open('w',newline='') as f:
-    w=csv.writer(f);w.writerow(['Characteristic','MV ARDS','nonintubated ARDS','Pneumonia without ARDS','Healthy controls']);w.writerows(results)
+    w=csv.writer(f);w.writerow(['Characteristic','MV ARDS','Nonintubated ARDS','Pneumonia without ARDS','Healthy controls']);w.writerows(results)
 # Supplementary table exports.
 files={
 'TableS1_DE_summary.csv':'gene_summary.csv','TableS2_Hallmark_all_contrasts.csv':'hallmark_all_contrasts.csv',
@@ -67,4 +50,4 @@ for name in ['TableS1_DE_summary.csv', 'TableS2_Hallmark_all_contrasts.csv']:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
         writer.writerows(records)
-(ROOT/'Table1_notes.md').write_text('Clinical severity is APACHE II. Clinical availability counts use all patient records.\n')
+(ROOT/'Table1_notes.md').write_text('Continuous variables are median (IQR), with available n. Categorical variables are n (%). Clinical association analyses use the discovery cohort with complete cases for each variable.\n')
