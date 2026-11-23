@@ -54,7 +54,3 @@ Outputs are written to results/; inputs and outputs are not committed to the rep
 Differential-expression models include clinical group and experimental batch. Hallmark enrichment uses Benjamini–Hochberg correction across 50 gene sets within each contrast. Clinical associations are evaluated in nonintubated ARDS and pneumonia without ARDS, with correction across 30 tests. Network reconstruction and resampling assess module stability, and GSE66890 provides an independent whole-blood evaluation.
 
 Each figure script exports the figure and its underlying source data. The table script assembles cohort characteristics and supplementary statistical results from the analysis outputs.
-
-## Version
-
-Prepared 24 November 2026 from the V27 workflow. Source checksums are listed in CODE_SHA256.json. Code repository: https://github.com/carry18/plasma-cfrna-ards . An archived release DOI has not yet been assigned.
