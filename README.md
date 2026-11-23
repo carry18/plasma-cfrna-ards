@@ -49,13 +49,11 @@ Figure 1 can run after 01, Figure 2/S1 after 02, Figure 3/4/5 after the required
 
 Outputs are written to results/; inputs and outputs are not committed to the repository. Network resampling is computationally intensive and uses single-threaded WGCNA per draw. Production checkpoints are reusable only when the algorithm/input fingerprint agrees; never copy old checkpoints into a new input run.
 
-## Statistical conventions and reproducibility
+## Analysis overview
 
-Clinical group/batch models, testing families, transformations and score definitions are implemented in the numbered scripts. Hallmark BH adjustment is within each contrast across 50 sets; the reported eight contrasts give 400 Hallmark results. Clinical BH adjustment covers 30 tests. M02 discovery and the discovery-cohort group comparison reuse the same patients and are exploratory; internal reconstruction assesses stability. GSE66890 is the independent external dataset.
+Differential-expression models include clinical group and experimental batch. Hallmark enrichment uses Benjamini–Hochberg correction across 50 gene sets within each contrast. Clinical associations are evaluated in nonintubated ARDS and pneumonia without ARDS, with correction across 30 tests. Network reconstruction and resampling assess module stability, and GSE66890 provides an independent whole-blood evaluation.
 
-The CFPL-input workflow has been rerun for steps 01–05 and Figure 1–6/S1, with numerical agreement to the frozen results. In the local audit, the four resampling designs each had one fresh reconstruction checked against the frozen checkpoints; S2 was also redrawn using 350 verified frozen checkpoints. The audit did not rebuild all 350 networks. A fresh full reproduction uses 06 as listed above; this repository includes no frozen result checkpoints or audit-only cache.
-
-Image pixels can differ with font/device versions and with display order after sample-ID changes. Numerical effects and source data are the primary reproduction checks. Internal Table 1 code uses all 79 patient records for availability counts; B/C-only clinical association models retain the original analysis population.
+Each figure script exports the figure and its underlying source data. The table script assembles cohort characteristics and supplementary statistical results from the analysis outputs.
 
 ## Version
 
