@@ -1,5 +1,7 @@
 # Reference assets
 
-- `msigdb_2026.1_Hs.rds`: public annotation only; MSigDB 2026.1.Hs Hallmark, Reactome, KEGG Legacy/Medicus, GO biological processes and Travaglini lung cell gene sets. Rebuild using `../internal/prepare_reference.R` and the corresponding raw MSigDB RDS collections. No cohort counts, sample annotations, differential-expression results or learned modules are stored in this asset. MSigDB usage/citation terms remain those of the source database.
-- `published_RR_signatures.csv`: externally published 40-gene predicted and 7-gene validated sets from Supplementary Table ST6, Mitsuyama et al., Respiratory Research 27:277 (2026), doi:10.1186/s12931-026-03708-0. Extracted from the original published supplementary workbook; signature membership is fixed, not learned in this study.
-- `figure1_defs.svg`: drawing symbols and style definitions used by Figure 1; no statistical results.
+- `msigdb_2026.1_Hs.rds`: MSigDB 2026.1.Hs Hallmark, Reactome, KEGG, GO biological-process and Travaglini lung-cell gene sets. The optional `../internal/prepare_reference.R` rebuilds this file from MSigDB collection files specified by CF_MSIGDB_DIR.
+- `published_RR_signatures.csv`: 40-gene predicted and seven-gene validated signatures from Mitsuyama et al., Respiratory Research. 2026;27:277, Supplementary Table ST6. doi:10.1186/s12931-026-03708-0.
+- `figure1_defs.svg`: drawing definitions for Figure 1.
+
+Reference-data usage terms and citations are listed in the root THIRD_PARTY_NOTICES.md.

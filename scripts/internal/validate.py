@@ -1,5 +1,5 @@
-"""Check all final V26 deliverables and statistical invariants; emit a reviewable report."""
-import csv,json,hashlib,sys,re
+"""Check generated figures, tables and key manuscript results."""
+import csv,json,sys,re
 from pathlib import Path
 P=Path('results'); checks=[]
 def check(name,ok,detail=''):
@@ -32,12 +32,7 @@ check('350 resampling draws',len(draws)==350 and [sum(r['mode']==mode and float(
 check('all B/C directions retained',all(float(r['direction_retained'])==1 for r in draws))
 t1=rows(P/'Table1.csv')
 check('Table 1 severity and ICU rows distinct',any(r['Characteristic']=='ICU stay days, median (IQR)' for r in t1) and any(r['Characteristic']=='APACHE II score, median (IQR)' for r in t1))
-# All implementation sources are included in a checksum inventory.
-manifest=[]
-for f in sorted(Path('scripts').rglob('*')):
-    if f.is_file() and '__pycache__' not in f.parts:manifest.append(dict(path=str(f),sha256=hashlib.sha256(f.read_bytes()).hexdigest()))
-(P/'code_checksums.json').write_text(json.dumps(manifest,indent=2)+'\n')
-report={'status':'passed' if all(c['passed'] for c in checks) else 'failed','checks':checks,'scope':'Final manuscript statistical and artifact invariants; consult logs and validation_notes.md for recomputation/cache provenance.'}
+report={'status':'passed' if all(c['passed'] for c in checks) else 'failed','checks':checks,'scope':'Generated figures, tables and key manuscript results.'}
 (P/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(f"{report['status']}: {sum(c['passed'] for c in checks)}/{len(checks)} checks")
 for c in checks:

@@ -130,4 +130,4 @@ pD <- effects + theme_classic(base_family = "Arial", base_size = 7) + theme(pane
 wr(b, "B_displayed_expanded_pathways")
 ps <- list(pA, pBar, network, pD, heatmap)
 fig <- assemble(ps, design = "A#B\n###\nC#D\n###\nEEE", widths = c(1.08, .10, 1), heights = c(1.5, .025, .72, .025, .9))
-finish(ps, fig, 3, 235, "V27 Figure 3. Full numerical results and post hoc display selection are exported as source data.")
+finish(ps, fig, 3, 235, "Pathway enrichment and co-expression modules; complete results are exported as source data.")

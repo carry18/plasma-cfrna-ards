@@ -1,2 +1,0 @@
-# Formal Python scripts use only the Python standard library.
-# Local-only clinical freezing requires openpyxl, outside the formal package.

@@ -60,4 +60,4 @@ pb <- ggplot(cf, aes(y = label)) +
   theme(axis.text.y = element_text(size = 5.4), legend.text = element_text(size = 5.2))
 pD <- pa / pb + plot_layout(heights = c(.8, 1.2))
 fig <- assemble(list(pA, pB, pC, pD), design = "AB\nCD", heights = c(1, 1.4))
-finish(list(pA, pB, pC, pD), fig, 5, 225, "Current 79-patient results; accepted clinical panel layout retained.")
+finish(list(pA, pB, pC, pD), fig, 5, 225, "Clinical associations and platelet-count adjustment.")

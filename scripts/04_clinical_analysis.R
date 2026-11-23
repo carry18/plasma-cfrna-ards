@@ -17,7 +17,7 @@ inputs <- readRDS("results/analysis/analysis_inputs.rds")
 patient_md <- inputs$main$metadata
 patient_expression <- inputs$main$expression
 
-# Clinical endpoints are frozen upstream, already linked to retained libraries.
+# Read clinical endpoints matched to the retained samples.
 clinical <- read.csv(file.path(input_dir, "clinical_endpoints.csv"), check.names = FALSE)
 stopifnot(!anyDuplicated(clinical$Sample))
 

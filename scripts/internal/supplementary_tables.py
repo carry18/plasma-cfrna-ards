@@ -1,4 +1,4 @@
-"""Generate Table 1 from frozen clinical CSV and S1-S5 from this run's analyses."""
+"""Generate Table 1 and supplementary tables from the analysis inputs and results."""
 import csv,re,shutil,math,json
 from pathlib import Path
 ROOT=Path('results'); ANALYSIS=ROOT/'analysis'; TABLES=ROOT/'supplementary_tables'
@@ -44,12 +44,12 @@ add('ICU stay days, median (IQR)',lambda ss:summary([num(r.get(fields['icu'])) f
 for key,label in [('steroids','Steroid treatment n'),('anticoagulants','Anticoagulant treatment n'),('transfusion','Transfusion n'),('ECMO','ECMO n')]:
     add(label,lambda ss,key=key:sum(int(r[fields[key]]) for r in ss))
 add('Deaths recorded n',lambda ss:sum(int(r['death']) for r in ss))
-clinical=fixed  # All 79 frozen patient records, not only the B/C association subset.
+clinical=fixed  # All 79 patient records.
 for ep,label in [('platelet','Platelet count available'),('pf_ratio','PaO2 FiO2 available'),('il6_value','IL 6 available'),('wbc_value','White blood cell count available'),('bilirubin_value','Bilirubin available'),('creatinine_value','Creatinine available')]:
     results.append([label]+[sum(r['group']==g and r[ep] not in ('NA','','NaN') for r in clinical) for g in 'ABCD'])
 with (ROOT/'Table1.csv').open('w',newline='') as f:
     w=csv.writer(f);w.writerow(['Characteristic','MV ARDS','nonintubated ARDS','Pneumonia without ARDS','Healthy controls']);w.writerows(results)
-# Explicit final tables; no unpublished candidate cohorts or exploratory models.
+# Supplementary table exports.
 files={
 'TableS1_DE_summary.csv':'gene_summary.csv','TableS2_Hallmark_all_contrasts.csv':'hallmark_all_contrasts.csv',
 'TableS3a_module_sizes.csv':'wgcna/module_sizes.csv',
@@ -67,4 +67,4 @@ for name in ['TableS1_DE_summary.csv', 'TableS2_Hallmark_all_contrasts.csv']:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
         writer.writerows(records)
-(ROOT/'Table1_notes.md').write_text('Clinical severity is APACHE II. Timing relative to sampling was incompletely documented. Clinical values and missingness retain the frozen V26 definitions; no new clinical information is introduced. Zero availability counts indicate unavailable linked measurements.\n')
+(ROOT/'Table1_notes.md').write_text('Clinical severity is APACHE II. Clinical availability counts use all patient records.\n')

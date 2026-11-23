@@ -1,6 +1,6 @@
-# Optional maintenance step: freeze published MSigDB annotation, not study results.
-# Default workflow uses the bundled asset and does not require a local MSigDB cache.
-cache <- Sys.getenv("CF_MSIGDB_DIR", path.expand("~/Library/Caches/org.R-project.R/R/msigdbr"))
+# Optional: rebuild reference definitions from MSigDB collection files.
+cache <- Sys.getenv("CF_MSIGDB_DIR")
+if (!nzchar(cache)) stop("Set CF_MSIGDB_DIR to the directory containing the MSigDB collection RDS files.")
 load_collection <- function(id) readRDS(file.path(cache, paste0("msigdb.2026.1.Hs.", id, ".rds")))
 h <- load_collection("H")
 c2 <- load_collection("C2")
