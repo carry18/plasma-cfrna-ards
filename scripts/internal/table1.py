@@ -46,6 +46,6 @@ def build_table1(rows):
     continuous('ICU stay days, median (IQR)', 'icu_days')
     for field, label in [('steroids', 'Corticosteroid treatment'), ('anticoagulants', 'Anticoagulant treatment'), ('transfusion', 'Transfusion'), ('ECMO', 'ECMO'), ('death', 'Deaths')]:
         categorical(label + ', n (%)', field, '1')
-    for field, label in [('platelet', 'Platelet count, 10⁹/L'), ('pf_ratio', 'PaO₂/FiO₂, mmHg'), ('il6_value', 'IL-6'), ('wbc_value', 'White blood cell count, 10⁹/L'), ('bilirubin_value', 'Total bilirubin'), ('creatinine_value', 'Creatinine')]:
+    for field, label in [('platelet', 'Platelet count, 10⁹/L'), ('pf_ratio', 'PaO₂/FiO₂, mmHg'), ('il6_value', 'IL-6, pg/mL'), ('wbc_value', 'White blood cell count, 10⁹/L'), ('bilirubin_value', 'Total bilirubin, μmol/L'), ('creatinine_value', 'Creatinine, μmol/L')]:
         continuous(label, field, 'Not available')
     return output
