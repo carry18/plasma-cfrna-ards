@@ -50,10 +50,13 @@ heat <- ggplot(x, aes(Sample, gene, fill = z)) +
   theme(legend.position = "bottom", legend.text = element_text(size = 6), legend.title = element_text(size = 6))
 bar <- ggplot(top, aes(Sample, 1, fill = group)) +
   geom_tile() +
-  scale_fill_manual(values = pal, labels = c(A = "MV ARDS (29)", B = "Nonintubated ARDS (17)", C = "Pneumonia without ARDS (33)", D = "Healthy (34)"), name = NULL) +
+  scale_fill_manual(values = pal, labels = c(A = "MV ARDS (29)", B = "Nonintubated ARDS (17)", C = "Pneumonia without ARDS (33)", D = "Healthy controls (34)"), name = NULL) +
   theme_void(base_family = "Arial") +
-  theme(legend.position = "top", legend.text = element_text(size = 5.7)) +
-  guides(fill = guide_legend(nrow = 2))
+  theme(legend.position = "top", legend.text = element_text(size = 6),
+        legend.key.size = grid::unit(2.5, "mm"),
+        legend.spacing.x = grid::unit(3, "mm"),
+        legend.margin = margin(2, 2, 4, 2)) +
+  guides(fill = guide_legend(ncol = 2, byrow = TRUE))
 pB <- (bar / heat) + plot_layout(heights = c(.10, 1))
 de3 <- subset(db$differential_expression, dataset == "internal_cfRNA" & model == "base" & contrast %in% c("A_D", "B_D", "C_D"))
 wide <- reshape(de3[, c("gene", "contrast", "logFC", "padj")], idvar = "gene", timevar = "contrast", direction = "wide")
@@ -146,7 +149,16 @@ pE <- ggplot(dd, aes(NES, pathway)) +
   labs(x = "Normalized enrichment score", y = NULL) +
   theme(panel.border = element_blank(), axis.line = element_line(colour = "#829099", linewidth = .35), axis.text.y = element_text(size = 5.15), panel.grid.major.y = element_blank(), legend.position = "bottom") +
   guides(fill = guide_colourbar(barwidth = grid::unit(24, "mm")))
-fig <- assemble(list(pA, pB, pC, pD, pE), design = "AB\nCE\nDE", widths = c(.92, 1.08), heights = c(.74, .76, 1.04))
+# A/B share the top row; B has a two-by-two legend above the heatmap.
+figure2_panels <- lapply(list(pA, pB, pC, pD, pE), clean_panel)
+figure2_label <- function(p, label) {
+  flat(p) + labs(tag = label) +
+    theme(plot.tag = element_text(family = "Arial", face = "bold", size = 9),
+          plot.tag.position = c(0, 1), plot.margin = margin(4, 4, 4, 4))
+}
+fig <- wrap_plots(lapply(seq_along(figure2_panels), function(i) {
+  figure2_label(figure2_panels[[i]], LETTERS[i])
+}), design = "AB\nCE\nDE", widths = c(1, 1.15), heights = c(.85, .75, 1.0))
 legend <- c(
   "Figure 2. Disease-associated plasma cfRNA remodeling and aggregate ARDS pathway patterns.",
   "A, Equal-weighted patient-group mean versus healthy controls in a group- and batch-adjusted descriptive model of 113 profiles (79 patients and 34 healthy controls). All tested genes are shown. Lines mark BH-adjusted P=0.05 and absolute log2 fold change=1.",

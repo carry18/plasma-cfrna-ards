@@ -38,6 +38,7 @@ files={
 'TableS3a_module_sizes.csv':'wgcna/module_sizes.csv',
 'TableS3b_all_patient_overlap.csv':'wgcna/all_patient_focal_overlap.csv','TableS3c_module_effects.csv':'wgcna/module_group_effects.csv',
 'TableS4a_clinical_associations.csv':'clinical/clinical_associations.csv','TableS4b_platelet_adjustment.csv':'clinical/platelet_count_adjustment.csv',
+'TableS4c_recorded_platelet_count_comparisons.csv':'clinical/recorded_platelet_count_comparisons.csv',
 'TableS5a_external_score.csv':'wgcna/GSE66890_focal_score_effect.csv','TableS5b_external_kME.csv':'wgcna/GSE66890_gene_module_correspondence.csv'}
 for dst,src in files.items():shutil.copyfile(ANALYSIS/src,TABLES/dst)
 # Keep submission tables consistent even when reading older nine-contrast caches.

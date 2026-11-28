@@ -16,7 +16,7 @@ with Path('results/inputs/analysis_samples.csv').open() as f:
 assert set(counts) == set('ABCD'), 'Figure 1 requires prepared samples in groups A/B/C/D'
 patient_n = sum(counts[g] for g in 'ABC')
 total_n = sum(counts.values())
-rows=[(165,'#93749E',['Nonintubated','ARDS'],str(counts['B'])),(455,'#527D9A',['Pneumonia','without ARDS'],str(counts['C'])),(745,'#B38A56',['Mechanically ventilated','ARDS'],str(counts['A'])),(1035,'#8B999F',['Healthy controls'],str(counts['D']))]
+rows=[(165,'#B38A56',['Mechanically ventilated','ARDS'],str(counts['A'])),(455,'#93749E',['Non-mechanically','ventilated ARDS'],str(counts['B'])),(745,'#527D9A',['Pneumonia','without ARDS'],str(counts['C'])),(1035,'#8B999F',['Healthy controls'],str(counts['D']))]
 for x,c,lines,n in rows:
  use('person',x-20,107,40,c)
  for i,l in enumerate(lines):text(x,173+i*22,l,18)
@@ -38,7 +38,7 @@ path('M1085 410 V423 H600 V439',True)
 text(600,453,f'Disease background: patients and healthy controls (n = {total_n})',21,True)
 text(600,483,f'Patient-only analysis (n = {patient_n}): overall ARDS vs pneumonia without ARDS',19)
 path('M600 496 V518',True)
-text(600,544,'Comparisons across ARDS and respiratory-support states',18,True)
+text(600,544,'Comparisons across the three patient groups',18,True)
 path('M600 558 V576 M315 576 H885 M315 576 V593',True);path('M885 576 V593',True)
 box(35,601,560,113,'#F5F9FC','#C5D7E2');box(615,601,550,113,'#F9F6FB','#D9CCE0')
 use('pathway',56,617,34,'#527D9A');text(104,642,'Pathway analysis',22,True,'start')

@@ -50,6 +50,6 @@ Outputs are saved to `results/`. Figure scripts export PNG, PDF, SVG and TIFF fi
 
 ## Analysis
 
-Expression models include clinical group and experimental batch. Hallmark enrichment uses Benjamini–Hochberg correction across 50 gene sets within each contrast. Clinical associations are evaluated in nonintubated ARDS and pneumonia without ARDS, with correction across 30 tests. Network reconstruction and resampling assess module stability; GSE66890 provides an independent whole-blood evaluation.
+Expression models include clinical group and experimental batch. Hallmark enrichment uses Benjamini–Hochberg correction across 50 gene sets within each contrast. Clinical associations are evaluated in nonintubated ARDS and pneumonia without ARDS, with correction across 30 tests. Step 04 also compares recorded platelet counts across the three patient groups and nonintubated ARDS versus pooled MV ARDS and pneumonia without ARDS, reporting nominal and four-comparison Holm-adjusted P values in Table S4c. Network reconstruction and resampling assess module stability; GSE66890 provides an independent whole-blood evaluation.
 
 Reference-data sources are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

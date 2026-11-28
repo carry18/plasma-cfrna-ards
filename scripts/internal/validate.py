@@ -12,7 +12,7 @@ for n in range(1,7):
 for n in [1,2]:
     for ext in ['svg','png','pdf','tiff']:
         f=P/f'supplementary_figures/FigureS{n}.{ext}';check(str(f.relative_to(P)),f.exists() and f.stat().st_size>100)
-expected=['TableS1_DE_summary','TableS2_Hallmark_all_contrasts','TableS3a_module_sizes','TableS3b_all_patient_overlap','TableS3c_module_effects','TableS3d_M02_resampling_summary','TableS3e_M02_resampling_draws','TableS4a_clinical_associations','TableS4b_platelet_adjustment','TableS5a_external_score','TableS5b_external_kME']
+expected=['TableS1_DE_summary','TableS2_Hallmark_all_contrasts','TableS3a_module_sizes','TableS3b_all_patient_overlap','TableS3c_module_effects','TableS3d_M02_resampling_summary','TableS3e_M02_resampling_draws','TableS4a_clinical_associations','TableS4b_platelet_adjustment','TableS4c_recorded_platelet_count_comparisons','TableS5a_external_score','TableS5b_external_kME']
 for name in expected:
     f=P/f'supplementary_tables/{name}.csv';check(name,f.exists() and bool(rows(f)))
 md=rows(P/'analysis/included_samples_patients79.csv')
@@ -25,6 +25,10 @@ platelet=next(r for r in clinical if r['signature']=='M02' and r['endpoint']=='p
 check('platelet n=40 and nominal P',int(platelet['n'])==40 and abs(float(platelet['P'])-.00412)<.00001)
 adjustment=next(r for r in rows(P/'supplementary_tables/TableS4b_platelet_adjustment.csv') if r['program']=='M02_module')
 check('platelet-adjusted M02 P=0.0674',abs(float(adjustment['adjusted_P'])-.0674)<.0001)
+counts=rows(P/'supplementary_tables/TableS4c_recorded_platelet_count_comparisons.csv')
+check('four platelet-count comparisons', [r['comparison'] for r in counts]==['A_B','A_C','B_C','B_AC'])
+pooled=next(r for r in counts if r['comparison']=='B_AC')
+check('platelet B versus pooled A+C', int(pooled['n_left'])==14 and int(pooled['n_right'])==52 and abs(float(pooled['nominal_P'])-.0310253465314001)<1e-10 and abs(float(pooled['Holm_P_four_comparisons'])-.1241013861256)<1e-10)
 external=rows(P/'supplementary_tables/TableS5a_external_score.csv')[0]
 check('external 684 genes, beta=0.816',int(external['measured_genes'])==684 and abs(float(external['estimate'])-.816)<.001)
 draws=rows(P/'supplementary_tables/TableS3e_M02_resampling_draws.csv')

@@ -1,5 +1,5 @@
 # 输入：01临床端点、02表达评分、03模块结果。
-# 输出：30项临床关联、完整病例记录和血小板校正结果。
+# 输出：30项临床关联、完整病例记录、血小板校正和三组计数比较。
 # 在项目根目录运行；前置步骤：01、02、03。
 #!/usr/bin/env Rscript
 
@@ -20,6 +20,10 @@ patient_expression <- inputs$main$expression
 # Read clinical endpoints matched to the retained samples.
 clinical <- read.csv(file.path(input_dir, "clinical_endpoints.csv"), check.names = FALSE)
 stopifnot(!anyDuplicated(clinical$Sample))
+
+# Count comparisons include all patient groups before restricting association models to B/C.
+source("scripts/internal/platelet_counts.R")
+wr(summarise_platelet_counts(clinical), "recorded_platelet_count_comparisons")
 
 bc_md <- droplevels(patient_md[patient_md$group %in% c("B", "C"), ])
 stopifnot(nrow(bc_md) == 50L)
